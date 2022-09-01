@@ -1,20 +1,32 @@
 import Pizza from './Pizza';
-import type PizzaSizes from './types/PizzaSizes';
 
-interface Builder {
-  reset(): void;
-  addPepperoni(): void;
-  addCheese(): void;
-  addPeppers(): void;
-  addSausage(): void;
-  addBacon(): void;
-  addTomatoSauce(): void;
-  addMushrooms(): void;
-  // eslint-disable-next-line no-unused-vars
-  setSize(size: PizzaSizes): void;
-}
+import {
+  PizzaTopping,
+  allPizzaCheeses,
+  allPizzaSauces,
+  allPizzaToppings,
+  PizzaCheese,
+  PizzaSauce,
+  PizzaSizes,
+  allPizzaSizes,
+} from './types';
 
-class PizzaBuilder implements Builder {
+/**
+ * This class contains steps the client can take to create an instance of Pizza.
+ * It contains methods to set the size, toppings, cheese, and sauce of the Pizza
+ * object and returns an instance of Pizza upon executing the bakePizza() method.
+ *
+ * @example
+ *   const builder = new PizzaBuilder();
+ *   const customPizza = builder
+ *     .addTopping('pepperoni')
+ *     .addTopping('bacon')
+ *     .addSauce('tomato')
+ *     .addCheese('mozzarella')
+ *     .setSize('xl')
+ *     .bakePizza();
+ */
+class PizzaBuilder {
   private pizza!: Pizza;
 
   constructor() {
@@ -25,44 +37,68 @@ class PizzaBuilder implements Builder {
     this.pizza = new Pizza();
   }
 
-  addBacon() {
-    this.pizza.bacon = true;
+  /**
+   * @param topping The topping you wish to add.
+   * @returns The current instance of PizzaBuilder.
+   */
+  addTopping(topping: PizzaTopping) {
+    if (!allPizzaToppings.includes(topping)) {
+      throw new TypeError(`'${topping}' is not a valid topping.`);
+    }
+    this.pizza.toppings.push(topping);
+    return this;
   }
 
-  addTomatoSauce() {
-    this.pizza.tomatoSauce = true;
+  /**
+   * @param cheese The cheese you wish to add.
+   * @returns The current instance of PizzaBuilder.
+   */
+  addCheese(cheese: PizzaCheese) {
+    if (!allPizzaCheeses.includes(cheese)) {
+      throw new TypeError(`'${cheese}' is not a valid cheese type.`);
+    }
+    this.pizza.cheeses.push(cheese);
+    return this;
   }
 
-  addMushrooms() {
-    this.pizza.mushrooms = true;
+  /**
+   * @param sauce The sauce you wish to add.
+   * @returns The current instance of PizzaBuilder.
+   */
+  addSauce(sauce: PizzaSauce) {
+    if (!allPizzaSauces.includes(sauce)) {
+      throw new TypeError(`'${sauce}' is not a valid sauce type.`);
+    }
+    this.pizza.sauces.push(sauce);
+    return this;
   }
 
-  addCheese() {
-    this.pizza.cheese = true;
-  }
-
-  addPepperoni() {
-    this.pizza.pepperoni = true;
-  }
-
-  addPeppers() {
-    this.pizza.peppers = true;
-  }
-
-  addSausage() {
-    this.pizza.sausage = true;
-  }
-
-  setSize(size: PizzaSizes): void {
+  /**
+   * @param size The size of the pizza to be created.
+   * @returns {this} The current instance of PizzaBuilder.
+   */
+  setSize(size: PizzaSizes) {
+    if (!allPizzaSizes.includes(size)) {
+      throw new TypeError(`'${size} is not a valid size.`);
+    }
     this.pizza.size = size;
+    return this;
   }
 
+  /**
+   * The final step for the pizza building process.
+   *
+   * @returns The PizzaBuilder result.
+   */
   bakePizza(): Pizza {
     if (!this.pizza.size) {
       throw new Error('Cannot bake a pizza with no size configured.');
     }
 
-    return this.pizza;
+    const { pizza } = this;
+
+    this.reset();
+    return pizza;
   }
 }
 

@@ -1,58 +1,70 @@
-import type PizzaSizes from './types/PizzaSizes';
 import type Pizza from './Pizza';
 import PizzaBuilder from './PizzaBuilder';
+import { PizzaSizes } from './types';
 
 /**
- * This class is responsible for executing the PizzaBuilder steps in a particular sequence.
+ * This class is responsible for executing the PizzaBuilder steps in a
+ * particular sequence.
  *
- * Using this class is optional when creating a Pizza object. Despite being optional, this
- * class can reduce code duplication on the client-side when the client wishes to make a
- * Pizza based on a pre-configured 'recipe'.
+ * Using this class is optional when creating a Pizza object. Despite being
+ * optional, this class can reduce code duplication on the client-side when the
+ * client wishes to make a Pizza based on a pre-configured 'recipe'.
  */
 export default class PizzaDirector {
-  private pizzaMaker!: PizzaBuilder;
+  private pizzaBuilder: PizzaBuilder;
 
-  private constructor(pizzaMaker: PizzaBuilder) {
-    this.pizzaMaker = pizzaMaker;
+  constructor(pizzaMaker: PizzaBuilder) {
+    this.pizzaBuilder = pizzaMaker;
   }
 
   /**
-   * Creates a new instance of PizzaDirector.
+   * Create a pepperoni pizza.
    *
-   * @param builder An instance of PizzaBuilder.
-   * @returns An instance of PizzaDirector.
+   * @param size The size for your pizza.
+   * @returns An instance of pizza with pepperoni as a topping, tomato sauce as
+   *   a sauce, and mozzarella as a cheese.
    */
-  public static start(builder: PizzaBuilder) {
-    return new PizzaDirector(builder);
-  }
-
   createPepperoniPizza(size: PizzaSizes): Pizza {
-    this.pizzaMaker.setSize(size);
-    this.pizzaMaker.addCheese();
-    this.pizzaMaker.addPepperoni();
-    this.pizzaMaker.addTomatoSauce();
-
-    return this.pizzaMaker.bakePizza();
+    return this.pizzaBuilder
+      .setSize(size)
+      .addTopping('pepperoni')
+      .addSauce('tomato')
+      .addCheese('mozzarella')
+      .bakePizza();
   }
 
+  /**
+   * Create a meat lovers pizza.
+   *
+   * @param size The size for your pizza.
+   * @returns An instance of pizza with pepperoni, sausage, and bacon as
+   *   toppings, tomato sauce as a sauce, and mozzarella as a cheese.
+   */
   createMeatLoversPizza(size: PizzaSizes) {
-    this.pizzaMaker.setSize(size);
-    this.pizzaMaker.addTomatoSauce();
-    this.pizzaMaker.addCheese();
-    this.pizzaMaker.addPepperoni();
-    this.pizzaMaker.addBacon();
-    this.pizzaMaker.addSausage();
-
-    return this.pizzaMaker.bakePizza();
+    return this.pizzaBuilder
+      .setSize(size)
+      .addTopping('pepperoni')
+      .addTopping('sausage')
+      .addTopping('bacon')
+      .addSauce('tomato')
+      .addCheese('mozzarella')
+      .bakePizza();
   }
 
+  /**
+   * Create a veggie pizza.
+   *
+   * @param size The size for your pizza.
+   * @returns An instance of pizza with mushrooms and peppers as toppings,
+   *   tomato sauce as a sauce and mozzarella as a cheese.
+   */
   createVeggiePizza(size: PizzaSizes) {
-    this.pizzaMaker.setSize(size);
-    this.pizzaMaker.addTomatoSauce();
-    this.pizzaMaker.addCheese();
-    this.pizzaMaker.addMushrooms();
-    this.pizzaMaker.addPeppers();
-
-    return this.pizzaMaker.bakePizza();
+    return this.pizzaBuilder
+      .setSize(size)
+      .addCheese('mozzarella')
+      .addTopping('mushrooms')
+      .addSauce('tomato')
+      .addTopping('peppers')
+      .bakePizza();
   }
 }

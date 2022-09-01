@@ -1,30 +1,19 @@
-import type PizzaSizes from './types/PizzaSizes';
+import { PizzaCheese, PizzaSauce, PizzaSizes, PizzaTopping } from './types';
 
+/** The base class for Pizza. */
 class Pizza {
-  pepperoni: boolean;
+  toppings: PizzaTopping[];
 
-  cheese: boolean;
+  cheeses: PizzaCheese[];
 
-  peppers: boolean;
-
-  sausage: boolean;
-
-  bacon: boolean;
-
-  tomatoSauce: boolean;
-
-  mushrooms: boolean;
+  sauces: PizzaSauce[];
 
   size: PizzaSizes | undefined;
 
   constructor() {
-    this.pepperoni = false;
-    this.cheese = false;
-    this.peppers = false;
-    this.sausage = false;
-    this.bacon = false;
-    this.tomatoSauce = false;
-    this.mushrooms = false;
+    this.toppings = [];
+    this.cheeses = [];
+    this.sauces = [];
     this.size = undefined;
   }
 }

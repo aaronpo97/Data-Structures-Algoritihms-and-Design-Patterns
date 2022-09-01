@@ -2,31 +2,24 @@ import PizzaBuilder from './PizzaBuilder';
 
 import PizzaDirector from './PizzaDirector';
 
-const builder = new PizzaBuilder();
+const pizzaBuilder = new PizzaBuilder();
+
+const director = new PizzaDirector(pizzaBuilder);
 
 /** Making a medium pepperoni pizza */
-const mdPepperoni = PizzaDirector.start(
-  new PizzaBuilder(),
-).createPepperoniPizza('md');
+const mdPepperoni = director.createPepperoniPizza('md');
 
 /** Making an extra-large meat lovers pizza */
-const xlMeatLovers = PizzaDirector.start(
-  new PizzaBuilder(),
-).createMeatLoversPizza('xl');
+const xlMeatLovers = director.createMeatLoversPizza('xl');
 
-/**
- * Making a large custom pizza with mushrooms, cheese, tomato sauce, pepperoni
- * and peppers.
- */
-const customPizzaBuilder = new PizzaBuilder();
+/** Making a small veggie pizza */
+const smVeggie = director.createVeggiePizza('sm');
 
-customPizzaBuilder.setSize('lg');
-customPizzaBuilder.addMushrooms();
-customPizzaBuilder.addCheese();
-customPizzaBuilder.addTomatoSauce();
-customPizzaBuilder.addPepperoni();
-customPizzaBuilder.addPeppers();
+/** Making a large custom pizza */
+const lgCustom = pizzaBuilder
+  .addTopping('pepperoni')
+  .addTopping('peppers')
+  .setSize('lg')
+  .bakePizza();
 
-const customPizza = customPizzaBuilder.bakePizza();
-
-console.log({ mdPepperoni, xlMeatLovers, customPizza });
+console.log([mdPepperoni, xlMeatLovers, smVeggie, lgCustom]);
