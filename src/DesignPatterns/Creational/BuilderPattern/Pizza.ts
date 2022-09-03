@@ -1,6 +1,10 @@
 import { PizzaCheese, PizzaSauce, PizzaSizes, PizzaTopping } from './types';
 
-/** The base class for Pizza. */
+/**
+ * The base class for Pizza.
+ *
+ * The creation of this object is abstracted away into the PizzaBuilder class.
+ */
 class Pizza {
   toppings: PizzaTopping[];
 

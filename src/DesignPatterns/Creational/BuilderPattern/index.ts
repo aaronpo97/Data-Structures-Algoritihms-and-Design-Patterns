@@ -3,7 +3,6 @@ import PizzaBuilder from './PizzaBuilder';
 import PizzaDirector from './PizzaDirector';
 
 const pizzaBuilder = new PizzaBuilder();
-
 const director = new PizzaDirector(pizzaBuilder);
 
 /** Making a medium pepperoni pizza */
@@ -19,6 +18,8 @@ const smVeggie = director.createVeggiePizza('sm');
 const lgCustom = pizzaBuilder
   .addTopping('pepperoni')
   .addTopping('peppers')
+  .addCheese('mozzarella')
+  .addCheese('parmesan')
   .setSize('lg')
   .bakePizza();
 

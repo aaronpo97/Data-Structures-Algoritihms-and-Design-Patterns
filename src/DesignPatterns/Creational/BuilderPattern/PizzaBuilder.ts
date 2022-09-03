@@ -75,7 +75,7 @@ class PizzaBuilder {
 
   /**
    * @param size The size of the pizza to be created.
-   * @returns {this} The current instance of PizzaBuilder.
+   * @returns The current instance of PizzaBuilder.
    */
   setSize(size: PizzaSizes) {
     if (!allPizzaSizes.includes(size)) {

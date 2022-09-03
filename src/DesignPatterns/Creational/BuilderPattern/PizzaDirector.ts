@@ -1,3 +1,4 @@
+import { allPizzaCheeses } from './types/index';
 import type Pizza from './Pizza';
 import PizzaBuilder from './PizzaBuilder';
 import { PizzaSizes } from './types';
